@@ -1,15 +1,13 @@
 package br.com.alura.carteira.service;
 
-import java.util.List;
 import java.util.Random;
-
-import javax.validation.Valid;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.alura.carteira.dto.UsuarioDto;
 import br.com.alura.carteira.dto.UsuarioFormDto;
@@ -32,12 +30,17 @@ public class UsuarioService {
 	}
 
 
-	public void cadastrar(@Valid UsuarioFormDto dto) {
+	@Transactional
+	public UsuarioDto cadastrar(UsuarioFormDto dto) {
 		Usuario usuario = modelMapper.map(dto, Usuario.class);		
 		
+		//String senha = new Random().nextInt(999999) + "";
 		String senha = new Random().nextInt(999999) + "";
 		usuario.setSenha(senha);
+		
 		usuarioRepository.save(usuario);
+		
+		return modelMapper.map(usuario, UsuarioDto.class);
 		
 	}
 }

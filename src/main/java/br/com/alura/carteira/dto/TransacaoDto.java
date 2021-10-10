@@ -11,9 +11,10 @@ import lombok.Setter;
 @Setter
 public class TransacaoDto {
 
+	private Long id;
 	private String ticker;
 	private BigDecimal preco;
-	private int quantidade;
+	private Integer quantidade;
 	private TipoTransacao tipo;
 	
 //	public TransacaoDto(Transacao transacao) {
