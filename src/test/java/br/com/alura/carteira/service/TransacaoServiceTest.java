@@ -24,60 +24,46 @@ import br.com.alura.carteira.repository.UsuarioRepository;
 @ExtendWith(MockitoExtension.class)
 class TransacaoServiceTest {
 
-	
 	@Mock
 	private TransacaoRepository repository;
 
 	@Mock
 	private UsuarioRepository usuarioRepository;
-	
+
 	@InjectMocks
 	private TransacaoService service;
+
+	private TransacaoFormDto criarTransacaoFormDto() {
+		TransacaoFormDto formDto = new TransacaoFormDto("ITSA4", new BigDecimal("10.24"), LocalDate.now(), 120,
+				TipoTransacao.COMPRA, 1l);
+		return formDto;
+	}
+
 	@Test
 	void deveriaCadastrarUmaTransacao() {
-		
 
-	
-		TransacaoFormDto formDto = new TransacaoFormDto("ITSA4",
-				new BigDecimal("10.24"),
-				LocalDate.now(),
-				120,
-				TipoTransacao.COMPRA,
-				1l);
-		
-		
+		TransacaoFormDto formDto = criarTransacaoFormDto();
+
 		TransacaoDto dto = service.cadastrar(formDto);
-		
-		//Mockito.verify(repository.save(Mockito.any()));
-		
+
+		Mockito.verify(repository).save(Mockito.any());
+
 		assertEquals(formDto.getTicker(), dto.getTicker());
 		assertEquals(formDto.getPreco(), dto.getPreco());
 		assertEquals(formDto.getQuantidade(), dto.getQuantidade());
 		assertEquals(formDto.getTipo(), dto.getTipo());
-		
+
 	}
+
 	@Test
 	void NaodeveriaCadastrarUmaTransacaoComUsuarioInexistente() {
-		
 
-	
-		TransacaoFormDto formDto = new TransacaoFormDto("ITSA4",
-				new BigDecimal("10.24"),
-				LocalDate.now(),
-				120,
-				TipoTransacao.COMPRA,
-				1l);
-		
-		Mockito
-		.when(usuarioRepository.getById(formDto.getUsuarioId()))
-		.thenThrow(EntityNotFoundException.class);
-		
-		assertThrows(IllegalArgumentException.class, () -> service.cadastrar(formDto) );
-		
-		
-		
+		TransacaoFormDto formDto = criarTransacaoFormDto();
+
+		Mockito.when(usuarioRepository.getById(formDto.getUsuarioId())).thenThrow(EntityNotFoundException.class);
+
+		assertThrows(IllegalArgumentException.class, () -> service.cadastrar(formDto));
+
 	}
 
-	
-	
 }
