@@ -5,8 +5,11 @@ import org.springframework.context.annotation.Configuration;
 
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+import java.util.Collections;
 
 @Configuration
 public class SpringFoxSwaggerConfiguration {
@@ -17,7 +20,18 @@ public class SpringFoxSwaggerConfiguration {
           .select()                                  
           .apis(RequestHandlerSelectors.any())              
           .paths(PathSelectors.any())                          
-          .build();                                           
+          .build()
+          .apiInfo(apiInfo());
     }
+	
+	private ApiInfo apiInfo() {
+	    return new ApiInfo(
+	      "API Carteira de Investimento", 
+	      "Some custom description of API.", 
+	      "Termos de Uso", 
+	      "Termos de Serviço", 
+	      new Contact("Lucas Barros", "www.example.com", "backEndRafaela@company.com"), 
+	      "License of API", "API license URL", Collections.emptyList());
+	}
 
 }
