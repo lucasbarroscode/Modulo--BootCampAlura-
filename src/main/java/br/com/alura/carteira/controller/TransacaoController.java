@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.alura.carteira.dto.AtualizacaoTransacaoFormDto;
+import br.com.alura.carteira.dto.TransacaoDetalhadaDto;
 import br.com.alura.carteira.dto.TransacaoDto;
 import br.com.alura.carteira.dto.TransacaoFormDto;
 import br.com.alura.carteira.service.TransacaoService;
@@ -63,8 +64,8 @@ public class TransacaoController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<TransacaoDto> detalhar(@PathVariable @NotNull Long id) {
-		TransacaoDto dto = service.detalhar(id);
+	public ResponseEntity<TransacaoDetalhadaDto> detalhar(@PathVariable @NotNull Long id) {
+		TransacaoDetalhadaDto dto = service.detalhar(id);
 		return ResponseEntity.ok(dto);
 		//return ResponseEntity.ok();
 	}

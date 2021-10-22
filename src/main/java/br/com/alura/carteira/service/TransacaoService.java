@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.alura.carteira.dto.AtualizacaoTransacaoFormDto;
+import br.com.alura.carteira.dto.TransacaoDetalhadaDto;
 import br.com.alura.carteira.dto.TransacaoDto;
 import br.com.alura.carteira.dto.TransacaoFormDto;
 import br.com.alura.carteira.modelo.Transacao;
@@ -72,10 +73,12 @@ public class TransacaoService {
 		
 	}
 
-	public TransacaoDto detalhar(@NotNull Long id) {
+	public TransacaoDetalhadaDto detalhar(@NotNull Long id) {
 		
-		Transacao transacao = repository.getById(id);
-		return modelMapper.map(transacao, TransacaoDto.class);
+		Transacao transacao = repository.findById(id)
+				.orElseThrow(() -> new EntityNotFoundException());
+		
+		return modelMapper.map(transacao, TransacaoDetalhadaDto.class);
 	}
 		
 }
