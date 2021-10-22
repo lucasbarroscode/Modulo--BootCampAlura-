@@ -1,9 +1,7 @@
 package br.com.alura.carteira.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import javax.persistence.EntityNotFoundException;
+import javax.validation.constraints.NotNull;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +10,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.alura.carteira.dto.AtualizacaoTransacaoFormDto;
 import br.com.alura.carteira.dto.TransacaoDto;
 import br.com.alura.carteira.dto.TransacaoFormDto;
 import br.com.alura.carteira.modelo.Transacao;
 import br.com.alura.carteira.modelo.Usuario;
 import br.com.alura.carteira.repository.TransacaoRepository;
 import br.com.alura.carteira.repository.UsuarioRepository;
+
 
 @Service
 public class TransacaoService {
@@ -54,11 +54,35 @@ public class TransacaoService {
 		}catch (EntityNotFoundException e) {
 			throw new IllegalArgumentException("Usuario Inexistente!");
 		}
+	}
 		
 		
-		
-
+	@Transactional
+		public TransacaoDto atualizar(AtualizacaoTransacaoFormDto dto) {
+			Transacao transacao = repository.getById(dto.getId());
+			
+			transacao.atualizarInformacoes(dto.getTicker(), dto.getData(), dto.getPreco(), dto.getQuantidade(), dto.getTipo());
+			
+			return modelMapper.map(transacao, TransacaoDto.class);
+		}
+	
+	@Transactional
+	public void remover(Long id) {
+		repository.deleteById(id);
 		
 	}
 
+	public TransacaoDto detalhar(@NotNull Long id) {
+		
+		Transacao transacao = repository.getById(id);
+		return modelMapper.map(transacao, TransacaoDto.class);
+	}
+		
 }
+		
+		
+		
+
+		
+	
+
