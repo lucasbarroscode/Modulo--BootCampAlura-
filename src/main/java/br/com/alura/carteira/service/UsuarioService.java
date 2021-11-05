@@ -44,8 +44,11 @@ public class UsuarioService {
 	@Transactional
 	public UsuarioDto cadastrar(UsuarioFormDto dto) {
 		Usuario usuario = modelMapper.map(dto, Usuario.class);		
+		usuario.setId(null);
+		
 		
 		Perfil perfil = perfilRepository.getById(dto.getPerfilId());
+		
 		usuario.adicionarPerfil(perfil);
 		
 		String senha = new Random().nextInt(999999) + "";
