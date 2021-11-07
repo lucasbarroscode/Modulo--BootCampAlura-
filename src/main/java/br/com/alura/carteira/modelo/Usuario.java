@@ -18,6 +18,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,6 +31,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Entity
 @Table(name = "usuarios")
+@EqualsAndHashCode(of = "id")
 public class Usuario implements UserDetails {
 
 	@Id
