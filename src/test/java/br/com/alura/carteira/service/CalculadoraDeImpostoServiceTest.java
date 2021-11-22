@@ -18,7 +18,7 @@ class CalculadoraDeImpostoServiceTest {
 
 	private Transacao criarTransacao(BigDecimal preco, Integer quantidade, TipoTransacao tipo) {
 		Transacao transacao = new Transacao(120l, "BBSE3", preco, quantidade, LocalDate.now(), tipo,
-				new Usuario(1l, "Rafaela", "rafa@email.com", "123456", null), BigDecimal.ZERO);
+				new Usuario(1l, "Rafaela", "rafa@email.com", "123456", "rafa@email.com",null), BigDecimal.ZERO);
 		return transacao;
 	}
 
